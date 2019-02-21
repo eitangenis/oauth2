@@ -142,6 +142,14 @@ module OAuth2
         opts[:headers] = {}
       end
       opts[:headers].merge!(headers)
+
+      if opts[:body][:redirect_uri].include? # Eitan Genis Change 
+        opts[:body].delete("client_id")
+        opts[:body].delete("client_secret")
+        opts[:body]["redirect_uri"] = opts[:body][:redirect_uri].split('?')[0]
+        opts[:body].delete(:redirect_uri)
+      end
+      
       response = request(options[:token_method], token_url, opts)
       if options[:raise_errors] && !(response.parsed.is_a?(Hash) && response.parsed['access_token'])
         error = Error.new(response)
