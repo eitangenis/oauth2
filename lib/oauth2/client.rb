@@ -143,11 +143,11 @@ module OAuth2
       end
       opts[:headers].merge!(headers)
 
-      if opts[:body][:redirect_uri].present? && opts[:body][:redirect_uri].include?('go_to_assist') # Eitan Genis Change 
+      if opts[:body]["redirect_uri"].present? && opts[:body]["redirect_uri"].include?('go_to_assist') # Eitan Genis Change 
         puts 'Samanage change: altering the request body for go_to_assist'
         opts[:body].delete("client_id")
         opts[:body].delete("client_secret")
-        opts[:body]["redirect_uri"] = opts[:body][:redirect_uri].split('?')[0]
+        opts[:body]["redirect_uri"] = opts[:body]["redirect_uri"].split('?')[0]
         opts[:body].delete(:redirect_uri)
       end
       
